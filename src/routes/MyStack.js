@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import IGNLogo from "./IGNLogo";
+import IGNLogo from "../components/IGNLogo";
 import MyTabs from "./MyTabs";
 
 const Stack = createStackNavigator();

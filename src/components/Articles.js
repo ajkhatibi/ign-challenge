@@ -26,7 +26,7 @@ export default function Articles(props) {
         <Text style={styles.title}>{props.title}</Text>
         <Image
           resizeMethod="resize"
-          source={{ uri: props.image }}
+          source={props.image ? { uri: props.image } : null}
           style={styles.image}
         />
         <Text style={styles.description}>
@@ -45,7 +45,10 @@ export default function Articles(props) {
         </Text>
       </View>
       <View style={styles.tailEndContent}>
-        <Text style={styles.categoryText}>{props.category}</Text>
+        <View>
+          <Text style={styles.categoryText}>{props.category}</Text>
+          <View style={styles.underline} />
+        </View>
         <View style={styles.commentView}>
           <EvilIcons name="comment" size={24} color="black" />
           <Text>{count}</Text>
@@ -105,11 +108,17 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     color: "#b02b21",
-    textDecorationLine: "underline",
     fontWeight: "bold",
   },
   commentView: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  underline: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: 3,
+    backgroundColor: "#b02b21",
+    height: 2,
   },
 });

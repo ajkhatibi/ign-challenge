@@ -1,8 +1,8 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import ArticlesFeed from "./ArticlesFeed";
-import VideosFeed from "./VideosFeed";
+import ArticlesFeed from "../screens/ArticlesFeed";
+import VideosFeed from "../screens/VideosFeed";
 
 const Tab = createBottomTabNavigator();
 

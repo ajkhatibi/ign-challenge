@@ -1,30 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
-  Modal,
   FlatList,
   ActivityIndicator,
+  Modal,
   Button,
 } from "react-native";
-import Videos from "./Videos";
-import { fetchingFeed, fetchingPagniatedFeed } from "../actions";
-import { useSelector, useDispatch } from "react-redux";
-import { actionTypes } from "../reducer/videoFeedReducer";
+import Articles from "../components/Articles";
 import { WebView } from "react-native-webview";
+import { fetchingFeed, fetchingPagniatedFeed } from "../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { actionTypes } from "../reducer/articlesFeedReducer";
 
-const VideosFeed = () => {
+const ArticlesFeed = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.videoFeedReducer);
+  const state = useSelector((state) => state.articlesFeedReducer);
   useEffect(() => {
-    dispatch(fetchingFeed("videos", actionTypes.FETCHING_VIDEO_FEED));
+    dispatch(fetchingFeed("articles", actionTypes.GET_FEED));
   }, []);
-
   const _renderItem = ({ item }) => {
     return (
-      <Videos
+      <Articles
+        author={item.authors[0]?.name}
+        authorImage={item.authors[0]?.thumbnail}
         description={item.metadata?.description}
+        title={item.metadata.headline}
         image={item.thumbnails[0]?.url}
         category={item.contentType}
         id={item.contentId}
@@ -40,9 +42,7 @@ const VideosFeed = () => {
         renderItem={_renderItem}
         ListFooterComponent={() => <ActivityIndicator />}
         onEndReached={() =>
-          dispatch(
-            fetchingPagniatedFeed("videos", actionTypes.FETCHING_PAGINATED_FEED)
-          )
+          dispatch(fetchingPagniatedFeed("articles", actionTypes.PAGINATE_FEED))
         }
       />
       <Modal
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VideosFeed;
+export default ArticlesFeed;
