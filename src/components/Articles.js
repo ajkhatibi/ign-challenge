@@ -13,7 +13,7 @@ export default function Articles(props) {
   const [count, setCount] = useState(0);
   const getCommentCount = async () => {
     const getFetchData = await fetch(
-      `https://ign-apis.herokuapp.com/comments?ids=${id}`
+      `https://ign-apis.herokuapp.com/comments?ids=${props.id}`
     );
     const getFetchDataJSON = await getFetchData.json();
     setCount(getFetchDataJSON.content[0].count);

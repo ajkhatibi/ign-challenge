@@ -14,14 +14,14 @@ export default function Videos(props) {
   const [count, setCount] = useState(0);
   const getCommentCount = async () => {
     const getFetchData = await fetch(
-      `https://ign-apis.herokuapp.com/comments?ids=${id}`
+      `https://ign-apis.herokuapp.com/comments?ids=${props.id}`
     );
     const getFetchDataJSON = await getFetchData.json();
     setCount(getFetchDataJSON.content[0].count);
   };
   useEffect(() => {
     getCommentCount();
-  }, [id]);
+  }, []);
   return (
     <TouchableOpacity onPress={props.onPress} style={styles.container}>
       <View style={styles.imageView}>
