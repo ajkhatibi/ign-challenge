@@ -50,17 +50,14 @@ function MyTabBar({ state, descriptors, navigation }) {
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={styles.tabStyle}
           >
             <Text
-              style={{
+              style={StyleSheet.compose(styles.lableStyle, {
                 color: isFocused ? "#b02b21" : "grey",
-                fontWeight: "bold",
-                fontSize: 16,
-              }}
+              })}
             >
               {label}
             </Text>
@@ -86,5 +83,14 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopColor: "#D3D3D3",
     borderTopWidth: 1,
+  },
+  tabStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  lableStyle: {
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });

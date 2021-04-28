@@ -13,7 +13,6 @@ export default (state = INITIAL_STATE, action) => {
     case actionTypes.GET_FEED:
       return { ...state, data: action.payload };
     case actionTypes.PAGINATE_FEED:
-      console.log("");
       return {
         data: state.data.concat(action.payload),
         index: state.index + 5,

@@ -9,19 +9,10 @@ import {
 } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import useGetComment from "../api/useGetComment";
 
-export default function Articles(props) {
-  const [count, setCount] = useState(0);
-  const getCommentCount = async () => {
-    const getFetchData = await fetch(
-      `https://ign-apis.herokuapp.com/comments?ids=${props.id}`
-    );
-    const getFetchDataJSON = await getFetchData.json();
-    setCount(getFetchDataJSON.content[0].count);
-  };
-  useEffect(() => {
-    getCommentCount();
-  }, []);
+export default function Videos(props) {
+  const [count] = useGetComment(props.id);
   return (
     <TouchableOpacity onPress={props.onPress} style={styles.container}>
       <View style={styles.imageView}>
