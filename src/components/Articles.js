@@ -7,7 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-
+import { EvilIcons } from "@expo/vector-icons";
 export default function Articles(props) {
   const [count, setCount] = useState(0);
   const getCommentCount = async () => {
@@ -29,7 +29,11 @@ export default function Articles(props) {
           source={{ uri: props.image }}
           style={styles.image}
         />
-        <Text style={styles.description}>{props.description}</Text>
+        <Text style={styles.description}>
+          {props.description?.length < 100
+            ? `${props.description}`
+            : `${props.description?.substring(0, 100)}...`}
+        </Text>
       </View>
       <View style={styles.authorView}>
         <Image source={{ uri: props.authorImage }} style={styles.authorImage} />
@@ -42,7 +46,10 @@ export default function Articles(props) {
       </View>
       <View style={styles.tailEndContent}>
         <Text style={styles.categoryText}>{props.category}</Text>
-        <Text>{count}</Text>
+        <View style={styles.commentView}>
+          <EvilIcons name="comment" size={24} color="black" />
+          <Text>{count}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -100,5 +107,9 @@ const styles = StyleSheet.create({
     color: "#b02b21",
     textDecorationLine: "underline",
     fontWeight: "bold",
+  },
+  commentView: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });

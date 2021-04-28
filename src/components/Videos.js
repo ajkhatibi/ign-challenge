@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import { EvilIcons } from "@expo/vector-icons";
 
 export default function Articles(props) {
   const [count, setCount] = useState(0);
@@ -29,7 +30,10 @@ export default function Articles(props) {
       </View>
       <View style={styles.tailEndContent}>
         <Text style={styles.categoryText}>{props.category}</Text>
-        <Text>{count}</Text>
+        <View style={styles.commentView}>
+          <EvilIcons name="comment" size={24} color="black" />
+          <Text>{count}</Text>
+        </View>
       </View>
     </View>
   );
@@ -64,5 +68,9 @@ const styles = StyleSheet.create({
     color: "#b02b21",
     textDecorationLine: "underline",
     fontWeight: "bold",
+  },
+  commentView: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
