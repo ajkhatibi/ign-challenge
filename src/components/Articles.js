@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
-import useGetComment from "../api/useGetComment";
 
 export default function Articles(props) {
   const [count, setCount] = useState(0);
