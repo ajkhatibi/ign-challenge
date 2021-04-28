@@ -7,33 +7,17 @@ import {
   ActivityIndicator,
 } from "react-native";
 import Videos from "./Videos";
-
+import { fetchingFeed, fetchingPagniatedFeed } from "../actions";
+import { useSelector, useDispatch } from "react-redux";
+import { actionTypes } from "../reducer/videoFeedReducer";
 const VideosFeed = () => {
-  const [listOfVideos, setListOfVideos] = useState([]);
-  const [paginationIndex, setPaginationIndex] = useState(10);
-  const getVideosData = async () => {
-    const getData = await fetch("https://ign-apis.herokuapp.com/videos");
-    const getDataJSON = await getData.json();
-    setListOfVideos(getDataJSON.data);
-  };
-  const pagination = async () => {
-    if (paginationIndex === 295) {
-      return;
-    }
-    const getData = await fetch(
-      `https://ign-apis.herokuapp.com/videos?startIndex=${paginationIndex}&count=5`
-    );
-    const getDataJSON = await getData.json();
-    const concatListOfVideos = listOfVideos.concat(getDataJSON.data);
-    setListOfVideos(concatListOfVideos);
-    setPaginationIndex((state) => state + 5);
-  };
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.videoFeedReducer);
   useEffect(() => {
-    getVideosData();
+    dispatch(fetchingFeed("videos", actionTypes.FETCHING_VIDEO_FEED));
   }, []);
 
   const _renderItem = ({ item }) => {
-    console.log("item: ", item);
     return (
       <Videos
         description={item.metadata?.description}
@@ -47,10 +31,14 @@ const VideosFeed = () => {
     <View style={styles.root}>
       <FlatList
         keyExtractor={(item, index) => index.toString()}
-        data={listOfVideos}
+        data={state.data}
         renderItem={_renderItem}
         ListFooterComponent={() => <ActivityIndicator />}
-        onEndReached={pagination}
+        onEndReached={() =>
+          dispatch(
+            fetchingPagniatedFeed("videos", actionTypes.FETCHING_PAGINATED_FEED)
+          )
+        }
       />
     </View>
   );

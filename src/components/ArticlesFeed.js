@@ -8,38 +8,19 @@ import {
   Button,
 } from "react-native";
 import Articles from "./Articles";
-import useGetArticleData from "../api/useGetArticleData";
 import { WebView } from "react-native-webview";
+import { fetchingFeed, fetchingPagniatedFeed } from "../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { actionTypes } from "../reducer/articlesFeedReducer";
 
 const ArticlesFeed = () => {
-  const [listOfArticles, setListOfArticles] = useState([]);
-  const [paginationIndex, setPaginationIndex] = useState(10);
   const [modalVisible, setModalVisible] = useState(false);
-
-  // const [list] = useGetArticleData("https://ign-apis.herokuapp.com/articles");
-  const getArticlesData = async () => {
-    const getData = await fetch("https://ign-apis.herokuapp.com/articles");
-    const getDataJSON = await getData.json();
-
-    setListOfArticles(getDataJSON.data);
-  };
-  const pagination = async () => {
-    if (paginationIndex === 295) {
-      return;
-    }
-    const getData = await fetch(
-      `https://ign-apis.herokuapp.com/articles?startIndex=${paginationIndex}&count=5`
-    );
-    const getDataJSON = await getData.json();
-    const concatListOfArticles = listOfArticles.concat(getDataJSON.data);
-    setListOfArticles(concatListOfArticles);
-    setPaginationIndex((state) => state + 5);
-  };
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.articlesFeedReducer);
   useEffect(() => {
-    getArticlesData();
+    dispatch(fetchingFeed("articles", actionTypes.GET_FEED));
   }, []);
   const _renderItem = ({ item }) => {
-    console.log("hi: ", item);
     return (
       <Articles
         author={item.authors[0]?.name}
@@ -57,10 +38,12 @@ const ArticlesFeed = () => {
     <View style={styles.root}>
       <FlatList
         keyExtractor={(item, index) => index.toString()}
-        data={listOfArticles}
+        data={state.data}
         renderItem={_renderItem}
         ListFooterComponent={() => <ActivityIndicator />}
-        onEndReached={pagination}
+        onEndReached={() =>
+          dispatch(fetchingPagniatedFeed("articles", actionTypes.PAGINATE_FEED))
+        }
       />
       <Modal
         animationType="slide"
