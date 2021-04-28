@@ -9,5 +9,4 @@ NOTE:
 
 ![Article Screen](./exampleArticle.png)
 ![Video Screen](./exampleVideo.png)
-There was no webpage in the reponse to the article payload so I use the generic ign.com page
 ![WebView](./exampleWebView.png)
