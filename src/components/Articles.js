@@ -5,10 +5,10 @@ export default function Articles(props) {
   const [count, setCount] = useState(0);
   const getCommentCount = async () => {
     const getFetchData = await fetch(
-      `https://ign-apis.herokuapp.com//comments?ids=${props.id}`
+      `https://ign-apis.herokuapp.com/comments?ids=${props.id}`
     );
     const getFetchDataJSON = await getFetchData.json();
-    setCount(getFetchDataJSON.data);
+    setCount(getFetchDataJSON.content[0].count);
   };
   useEffect(() => {
     getCommentCount();
@@ -35,7 +35,7 @@ export default function Articles(props) {
       </View>
       <View style={styles.tailEndContent}>
         <Text style={styles.categoryText}>{props.category}</Text>
-        <Text>{100}</Text>
+        <Text>{count}</Text>
       </View>
     </View>
   );
