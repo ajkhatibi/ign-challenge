@@ -21,7 +21,11 @@ export default function Articles(props) {
           source={{ uri: props.image }}
           style={styles.image}
         />
-        <Text style={styles.description}>{props.description}</Text>
+        <Text style={styles.description}>
+          {props.description.length < 100
+            ? `${props.description}`
+            : `${props.description.substring(0, 100)}...`}
+        </Text>
       </View>
       <View style={styles.tailEndContent}>
         <Text style={styles.categoryText}>{props.category}</Text>
@@ -57,7 +61,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   categoryText: {
-    color: "red",
+    color: "#b02b21",
     textDecorationLine: "underline",
     fontWeight: "bold",
   },

@@ -14,7 +14,7 @@ const MyStack = () => (
       options={{
         headerTitle: () => <IGNLogo style={styles.logo} />,
         headerStyle: {
-          backgroundColor: "red",
+          backgroundColor: "#b02b21",
         },
       }}
       component={MyTabs}

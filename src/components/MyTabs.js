@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import ArticlesFeed from "./ArticlesFeed";
 import VideosFeed from "./VideosFeed";
 
@@ -14,15 +14,7 @@ function MyTabBar({ state, descriptors, navigation }) {
   }
 
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        height: 50,
-        backgroundColor: "white",
-        borderTopColor: "#D3D3D3",
-        borderTopWidth: 1,
-      }}
-    >
+    <View style={styles.buttonView}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -65,7 +57,7 @@ function MyTabBar({ state, descriptors, navigation }) {
           >
             <Text
               style={{
-                color: isFocused ? "red" : "grey",
+                color: isFocused ? "#b02b21" : "grey",
                 fontWeight: "bold",
                 fontSize: 16,
               }}
@@ -86,3 +78,13 @@ const MyTabs = () => (
 );
 
 export default MyTabs;
+
+const styles = StyleSheet.create({
+  buttonView: {
+    flexDirection: "row",
+    height: 50,
+    backgroundColor: "white",
+    borderTopColor: "#D3D3D3",
+    borderTopWidth: 1,
+  },
+});

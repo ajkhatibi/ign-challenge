@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, FlatList, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  ActivityIndicator,
+  Modal,
+  Button,
+} from "react-native";
 import Articles from "./Articles";
+import useGetArticleData from "../api/useGetArticleData";
+import { WebView } from "react-native-webview";
 
 const ArticlesFeed = () => {
   const [listOfArticles, setListOfArticles] = useState([]);
   const [paginationIndex, setPaginationIndex] = useState(10);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  // const [list] = useGetArticleData("https://ign-apis.herokuapp.com/articles");
   const getArticlesData = async () => {
     const getData = await fetch("https://ign-apis.herokuapp.com/articles");
     const getDataJSON = await getData.json();
+
     setListOfArticles(getDataJSON.data);
   };
   const pagination = async () => {
@@ -26,6 +39,7 @@ const ArticlesFeed = () => {
     getArticlesData();
   }, []);
   const _renderItem = ({ item }) => {
+    console.log("hi: ", item);
     return (
       <Articles
         author={item.authors[0]?.name}
@@ -35,6 +49,7 @@ const ArticlesFeed = () => {
         image={item.thumbnails[0]?.url}
         category={item.contentType}
         id={item.contentId}
+        onPress={() => setModalVisible(true)}
       />
     );
   };
@@ -47,6 +62,16 @@ const ArticlesFeed = () => {
         ListFooterComponent={() => <ActivityIndicator />}
         onEndReached={pagination}
       />
+      <Modal
+        animationType="slide"
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <Button title={"Close"} onPress={() => setModalVisible(false)} />
+        <WebView source={{ uri: "https://www.ign.com" }} />
+      </Modal>
     </View>
   );
 };

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 
 export default function Articles(props) {
   const [count, setCount] = useState(0);
@@ -14,7 +21,7 @@ export default function Articles(props) {
     getCommentCount();
   }, []);
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={props.onPress} style={styles.container}>
       <View>
         <Text style={styles.title}>{props.title}</Text>
         <Image
@@ -37,7 +44,7 @@ export default function Articles(props) {
         <Text style={styles.categoryText}>{props.category}</Text>
         <Text>{count}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -90,7 +97,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   categoryText: {
-    color: "red",
+    color: "#b02b21",
     textDecorationLine: "underline",
     fontWeight: "bold",
   },
