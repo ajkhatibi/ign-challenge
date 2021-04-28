@@ -2,15 +2,19 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
-  Text,
+  Modal,
   FlatList,
   ActivityIndicator,
+  Button,
 } from "react-native";
 import Videos from "./Videos";
 import { fetchingFeed, fetchingPagniatedFeed } from "../actions";
 import { useSelector, useDispatch } from "react-redux";
 import { actionTypes } from "../reducer/videoFeedReducer";
+import { WebView } from "react-native-webview";
+
 const VideosFeed = () => {
+  const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
   const state = useSelector((state) => state.videoFeedReducer);
   useEffect(() => {
@@ -24,6 +28,7 @@ const VideosFeed = () => {
         image={item.thumbnails[0]?.url}
         category={item.contentType}
         id={item.contentId}
+        onPress={() => setModalVisible(true)}
       />
     );
   };
@@ -40,6 +45,16 @@ const VideosFeed = () => {
           )
         }
       />
+      <Modal
+        animationType="slide"
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <Button title={"Close"} onPress={() => setModalVisible(false)} />
+        <WebView source={{ uri: "https://www.ign.com" }} />
+      </Modal>
     </View>
   );
 };

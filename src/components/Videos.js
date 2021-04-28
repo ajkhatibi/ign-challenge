@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 export default function Articles(props) {
   const [count, setCount] = useState(0);
@@ -15,8 +23,8 @@ export default function Articles(props) {
     getCommentCount();
   }, []);
   return (
-    <View style={styles.container}>
-      <View>
+    <TouchableOpacity onPress={props.onPress} style={styles.container}>
+      <View style={styles.imageView}>
         <Image
           resizeMethod="resize"
           source={{ uri: props.image }}
@@ -27,6 +35,9 @@ export default function Articles(props) {
             ? `${props.description}`
             : `${props.description.substring(0, 100)}...`}
         </Text>
+        <View style={styles.playButton}>
+          <Feather name="play" size={25} color="white" />
+        </View>
       </View>
       <View style={styles.tailEndContent}>
         <Text style={styles.categoryText}>{props.category}</Text>
@@ -35,7 +46,7 @@ export default function Articles(props) {
           <Text>{count}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -57,7 +68,8 @@ const styles = StyleSheet.create({
   description: {
     fontWeight: "400",
     fontSize: 14,
-    margin: 5,
+    marginHorizontal: 5,
+    marginVertical: 15,
   },
   tailEndContent: {
     justifyContent: "space-between",
@@ -72,5 +84,20 @@ const styles = StyleSheet.create({
   commentView: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  playButton: {
+    position: "absolute",
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: "#b02b21",
+    justifyContent: "center",
+    alignItems: "center",
+    bottom: 70,
+    left: 10,
+    paddingLeft: 5,
+  },
+  imageView: {
+    height: Dimensions.get("screen").height * 0.4,
   },
 });
